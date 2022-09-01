@@ -1,0 +1,50 @@
+:root {
+    --primaryColor: #f55400;
+    --primaryShade: #dd4c00;
+}
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: white;
+}
+
+.login-body {
+    height: 100vh;
+    background-color: var(--primaryColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-icon {
+    height: 40px;
+    object-fit: contain;
+}
+
+.login-title {
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    font-size: 20px;
+}
+.breadcrumb-transparent {
+    padding: 0 0;
+    background-color: inherit;
+}
+
+.main-text {
+    color: var(--primaryColor);
+}
+
+.main-button {
+    padding: .5em 1em;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    background-color: var(--primaryColor);
+    color: white;
+}
+
+.main-button:hover {
+    background-color: var(--primaryShade);
+    border: 1px solid var(--primaryShade);
+    cursor: pointer;
+}
