@@ -26,8 +26,15 @@
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a href="/logout" class="nav-link navbar-link-item">Logout</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link navbar-link-item" data-toggle="dropdown" href="#">
+                <i class="fa fa-user mr-2"></i>
+                <span>{{ auth()->user()->username }}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+                <a href="#" class="dropdown-item navbar-link-item">
+                    <i class="fa fa-power-off mr-2"></i>Keluar</a>
+            </div>
         </li>
     </ul>
 </nav>
@@ -49,6 +56,20 @@
                            class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin' ? 'active' : ''}}">
                             <i class="fa fa-tachometer nav-icon" aria-hidden="true"></i>
                             <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/provinsi"
+                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/provinsi' ? 'active' : ''}}">
+                            <i class="fa fa-map nav-icon" aria-hidden="true"></i>
+                            <p>Provinsi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/kota"
+                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/kota' ? 'active' : ''}}">
+                            <i class="fa fa-map-marker nav-icon" aria-hidden="true"></i>
+                            <p>Kota</p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'pengaduan') ? 'menu-open' : ''}}">

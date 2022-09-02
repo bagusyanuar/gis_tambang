@@ -1,10 +1,17 @@
 :root {
     --primaryColor: #f55400;
     --primaryShade: #dd4c00;
+    --warningColor: #EF5B0C;
+    --warningShade: #cc9b30;
+    --infoColor: #0078AA;
+    --infoShade: #006088;
+    --dangerColor: #EB1D36;
+    --dangerShade: #bc172b;
+    --darkColor: #100F0F;
 }
 
 body {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Josefin Sans', sans-serif !important;
     background-color: white;
 }
 
@@ -47,4 +54,139 @@ body {
     background-color: var(--primaryShade);
     border: 1px solid var(--primaryShade);
     cursor: pointer;
+    color: white;
+}
+
+.main-button-sm {
+    padding: .2em .7em;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    background-color: var(--primaryColor);
+    color: white;
+}
+
+.main-button-sm:hover {
+    background-color: var(--primaryShade);
+    border: 1px solid var(--primaryShade);
+    cursor: pointer;
+    color: white;
+}
+
+.warning-button {
+    padding: .5em 1em;
+    border: 1px solid var(--warningColor);
+    border-radius: 5px;
+    background-color: var(--warningColor);
+    color: var(--darkColor);
+}
+
+.warning-button:hover {
+    background-color: var(--warningShade);
+    border: 1px solid var(--warningShade);
+    cursor: pointer;
+    color: var(--darkColor);
+}
+
+.warning-button-sm {
+    padding: .2em .7em;
+    border: 1px solid var(--warningColor);
+    border-radius: 5px;
+    background-color: var(--warningColor);
+    color: var(--darkColor);
+}
+
+.warning-button-sm:hover {
+    background-color: var(--warningShade);
+    border: 1px solid var(--warningShade);
+    cursor: pointer;
+    color: var(--darkColor);
+}
+
+.info-button {
+    padding: .5em 1em;
+    border: 1px solid var(--infoColor);
+    border-radius: 5px;
+    background-color: var(--infoColor);
+    color: white;
+}
+
+.info-button:hover {
+    background-color: var(--infoShade);
+    border: 1px solid var(--infoShade);
+    cursor: pointer;
+    color: white;
+}
+
+.info-button-sm {
+    padding: .2em .7em;
+    border: 1px solid var(--infoColor);
+    border-radius: 5px;
+    background-color: var(--infoColor);
+    color: white;
+}
+
+.info-button-sm:hover {
+    background-color: var(--infoShade);
+    border: 1px solid var(--infoShade);
+    cursor: pointer;
+    color: white;
+}
+
+.danger-button {
+    padding: .5em 1em;
+    border: 1px solid var(--dangerColor);
+    border-radius: 5px;
+    background-color: var(--dangerColor);
+    color: white;
+}
+
+.danger-button:hover {
+    background-color: var(--dangerShade);
+    border: 1px solid var(--dangerShade);
+    cursor: pointer;
+    color: white;
+}
+
+.danger-button-sm {
+    padding: .2em .7em;
+    border: 1px solid var(--dangerColor);
+    border-radius: 5px;
+    background-color: var(--dangerColor);
+    color: white;
+}
+
+.danger-button-sm:hover {
+    background-color: var(--dangerShade);
+    border: 1px solid var(--dangerShade);
+    cursor: pointer;
+    color: white;
+}
+
+.navbar-link-item {
+
+    text-decoration: none;
+    color: rgba(0,0,0,.5);
+}
+.navbar-link-item:hover {
+    text-decoration: none;
+    color: #4C4C4C;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: var(--primaryColor);
+}
+
+.breadcrumb-item a {
+    color: var(--primaryColor);
+    font-weight: bold;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primaryShade);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    display: inline-block;
+    color: #6c757d;
+    content: "\00BB";
 }

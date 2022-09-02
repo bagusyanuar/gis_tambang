@@ -14,4 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login']);
-Route::get('/admin', [\App\Http\Controllers\DashboardController::class, 'index']);
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
+    Route::group(['prefix' => 'provinsi'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\ProvinceController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\ProvinceController::class, 'add']);
+    });
+    Route::group(['prefix' => 'kota'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\CityController::class, 'index']);
+    });
+});
