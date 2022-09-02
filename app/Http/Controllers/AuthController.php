@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends CustomController
 {
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('guest')->except('logout');
     }
 
     public function login()
@@ -26,5 +28,11 @@ class AuthController extends CustomController
             return redirect()->back()->with('failed', 'Periksa Kembali Username dan Password Anda');
         }
         return view('login');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

@@ -1,6 +1,9 @@
 :root {
     --primaryColor: #f55400;
     --primaryShade: #dd4c00;
+    --primaryLight: #feeee6;
+    --accentColor: #6e0000;
+    --accentShade: #580000;
     --warningColor: #EF5B0C;
     --warningShade: #cc9b30;
     --infoColor: #0078AA;
@@ -13,6 +16,10 @@
 body {
     font-family: 'Josefin Sans', sans-serif !important;
     background-color: white;
+}
+
+.f14 {
+    font-size: 14px;
 }
 
 .login-body {
@@ -38,6 +45,15 @@ body {
     background-color: inherit;
 }
 
+.bg-main {
+    background-color: var(--primaryColor);
+    color: white;
+}
+
+.bg-accent {
+    background-color: var(--accentColor);
+    color: white;
+}
 .main-text {
     color: var(--primaryColor);
 }
@@ -55,6 +71,45 @@ body {
     border: 1px solid var(--primaryShade);
     cursor: pointer;
     color: white;
+    -webkit-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+
+.accent-button {
+    padding: .5em 1em;
+    border: 1px solid var(--accentColor);
+    border-radius: 5px;
+    background-color: var(--accentColor);
+    color: white;
+}
+
+.accent-button:hover {
+    background-color: var(--accentShade);
+    border: 1px solid var(--accentShade);
+    cursor: pointer;
+    color: white;
+    -webkit-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+
+.main-button-outline {
+    padding: .5em 1em;
+    border: 1px solid var(--primaryColor);
+    border-radius: 5px;
+    background-color: white;
+    color: var(--primaryColor);
+}
+
+.main-button-outline:hover {
+    background-color: var(--primaryShade);
+    border: 1px solid var(--primaryShade);
+    cursor: pointer;
+    color: white;
+    -webkit-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    transition: all .3s ease-in;
 }
 
 .main-button-sm {
@@ -162,8 +217,8 @@ body {
     color: white;
 }
 
+/*admin lte*/
 .navbar-link-item {
-
     text-decoration: none;
     color: rgba(0,0,0,.5);
 }
@@ -172,8 +227,16 @@ body {
     color: #4C4C4C;
 }
 
+.sidebar-dark-primary {
+    background-color: var(--accentColor);
+}
+
 .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
     background-color: var(--primaryColor);
+}
+
+.sidebar-dark-primary .sidebar a {
+    color: white;
 }
 
 .breadcrumb-item a {
@@ -189,4 +252,27 @@ body {
     display: inline-block;
     color: #6c757d;
     content: "\00BB";
+}
+
+/*datatable*/
+
+table.dataTable tr.odd { background-color: var(--primaryLight); }
+table.dataTable tr.even { background-color: white; }
+table.dataTable  { margin-bottom: 2em; }
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: var(--primaryColor);
+    border-color: var(--primaryColor);
+}
+
+.page-link {
+    color: var(--primaryColor);
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-link:hover {
+    color: var(--primaryColor);
+    background-color: var(--primaryLight);
+    border: 1px solid #dee2e6;
 }

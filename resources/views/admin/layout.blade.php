@@ -40,7 +40,7 @@
 </nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-1">
     <div class="sidebar">
-        <a href="/admin" class="brand-link">
+        <a href="/admin" class="brand-link" style="border-bottom: 1px solid #a0aec0">
             <img src="{{ asset('assets/icons/logo-short.png') }}" style="width: 34px !important;"
                  alt="AdminLTE Logo"
                  class="brand-image text-center"
@@ -60,7 +60,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/admin/provinsi"
-                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/provinsi' ? 'active' : ''}}">
+                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/provinsi') ? 'active' : ''}}">
                             <i class="fa fa-map nav-icon" aria-hidden="true"></i>
                             <p>Provinsi</p>
                         </a>
@@ -113,6 +113,12 @@
     @yield('content-title')
     @yield('content')
 </div>
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2022</strong> All rights reserved.
+</footer>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

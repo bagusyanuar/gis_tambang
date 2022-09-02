@@ -22,6 +22,19 @@ class ProvinceController extends CustomController
 
     public function add()
     {
+        if ($this->request->method() === 'POST') {
+            try {
+                $data = [
+                    'name' => $this->postField('name')
+                ];
+                Province::create($data);
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Data...');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
+            }
+
+
+        }
         return view('admin.province.add');
     }
 }
