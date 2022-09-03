@@ -21,8 +21,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'provinsi'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\ProvinceController::class, 'index']);
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\ProvinceController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\ProvinceController::class, 'patch']);
+        Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\ProvinceController::class, 'destroy']);
     });
     Route::group(['prefix' => 'kota'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\CityController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CityController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\CityController::class, 'patch']);
     });
 });

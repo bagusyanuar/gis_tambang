@@ -14,6 +14,9 @@
     <link href="{{ asset('/css/sweetalert2.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/sweetalert2.min.js')}}"></script>
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
     <title>Document</title>
     @yield('css')
 </head>
@@ -71,38 +74,6 @@
                             <i class="fa fa-map-marker nav-icon" aria-hidden="true"></i>
                             <p>Kota</p>
                         </a>
-                    </li>
-                    <li class="nav-item has-treeview {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'pengaduan') ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'pengaduan') ? 'active' : ''}}">
-                            <i class="nav-icon fa fa-bell"></i>
-                            <p>
-                                Pengaduan
-                                <i class="right fa fa-angle-down"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/admin/pengaduan/menunggu"
-                                   class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/pengaduan/menunggu' ? 'active' : ''}}">
-                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Menunggu</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/pengaduan/terima"
-                                   class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/pengaduan/terima' ? 'active' : ''}}">
-                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Terima</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/pengaduan/tolak"
-                                   class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/pengaduan/tolak' ? 'active' : ''}}">
-                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Tolak</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </nav>
             </ul>

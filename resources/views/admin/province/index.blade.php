@@ -18,13 +18,13 @@
         </div>
     </div>
     <section>
-        <div class="card">
-            <div class="card-header bg-main">
+        <div class="card card-outline card-warning">
+            <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-0"><i class="fa fa-map mr-2"></i>Data Provinsi</p>
-                    <a href="/admin/provinsi/tambah" class="main-button-sm" style="font-size: 16px;">
+                    <p class="mb-0">Data Provinsi</p>
+                    <a href="/admin/provinsi/tambah" class="main-button f14">
                         <i class="fa fa-plus mr-1"></i>
-                        {{--                        <span>Tambah</span>--}}
+                        <span>Tambah</span>
                     </a>
                 </div>
             </div>
@@ -42,9 +42,17 @@
                         <tr>
                             <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>
                             <td class="f14">{{ ucwords(strtolower($v->name)) }}</td>
-                            <td width="15%" class="text-center">
-                                <a href="#" class="main-button-outline">
-                                    <span style="font-size: 12px;">Kelola</span></a>
+                            <td width="10%" class="text-center">
+                                <div class="dropdown">
+                                    <a href="#" class="main-button-outline" data-toggle="dropdown">
+                                        <span style="font-size: 12px;">Kelola</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+                                        <a href="/admin/provinsi/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
+                                        <a href="#" data-id="{{ $v->id }}"
+                                           class="dropdown-item f12 btn-delete">Delete</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -57,11 +65,32 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
+        function destroy(id) {
+            AjaxPost('/admin/provinsi/' + id + '/delete', function () {
+                window.location.reload();
+            })
+        }
+
+        function eventDelete() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                AlertConfirm('Apakah anda yakin menghapus?', 'Data yang dihapus tidak dapat dikembalikan!', function () {
+                    destroy(id);
+                })
+            });
+        }
+
         $(document).ready(function () {
             $('#table-data').DataTable({
-                "scrollX": true
+                "scrollX": true,
+                "fnDrawCallback": function (setting) {
+                    eventDelete();
+                }
             });
+            eventDelete();
         });
     </script>
 @endsection

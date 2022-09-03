@@ -20,7 +20,7 @@
                 <li class="breadcrumb-item">
                     <a href="/admin/provinsi">Provinsi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">tambah
+                <li class="breadcrumb-item active" aria-current="page">Edit
                 </li>
             </ol>
         </div>
@@ -35,7 +35,7 @@
                         <div class="w-100 mb-4">
                             <label for="name" class="form-label f14">Nama Provinsi</label>
                             <input type="text" class="form-control f14" id="name" placeholder="Nama Provinsi"
-                                   name="name">
+                                   name="name" value="{{ $data->name }}">
                         </div>
                         <hr>
                         <div class="w-100 text-right">
