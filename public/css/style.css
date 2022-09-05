@@ -298,10 +298,10 @@ table.dataTable {
     border: 1px solid #dee2e6;
 }
 
-/*.dataTables_scrollBody {*/
-/*    overflow-y: visible !important;*/
-/*    -ms-overflow-y: visible !important;*/
-/*}*/
+.dataTables_scrollBody {
+    overflow: visible !important;
+    -ms-overflow: visible !important;
+}
 
 /*select2*/
 .select2-selection {

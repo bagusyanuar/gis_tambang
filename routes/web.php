@@ -18,6 +18,21 @@ Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class,
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
+
+    Route::group(['prefix' => 'jenis'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CategoryController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\CategoryController::class, 'patch']);
+        Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'perusahaan'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\CompanyController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CompanyController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\CompanyController::class, 'patch']);
+        Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\CompanyController::class, 'destroy']);
+    });
+
     Route::group(['prefix' => 'provinsi'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\ProvinceController::class, 'index']);
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\ProvinceController::class, 'add']);

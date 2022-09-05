@@ -6,7 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{csrf_token()}}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/adminlte/css/adminlte.min.css')}}">
     <link href="{{ asset('/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -22,10 +23,15 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <nav class="main-header navbar navbar-expand elevation-1">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav align-items-center">
         <li class="nav-item">
             <a class="nav-link navbar-link-item" data-widget="pushmenu" href="#" role="button"><i
                     class="fa fa-bars"></i></a>
+        </li>
+        <li class="nav-item">
+            <div>
+                Sistem Informasi Quarry Kemenkeu PUPR
+            </div>
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
@@ -44,11 +50,11 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-1">
     <div class="sidebar">
         <a href="/admin" class="brand-link" style="border-bottom: 1px solid #a0aec0">
-            <img src="{{ asset('assets/icons/logo-short.png') }}" style="width: 34px !important;"
+            <img src="{{ asset('assets/icons/logo.png') }}" style="width: 34px !important;"
                  alt="AdminLTE Logo"
                  class="brand-image text-center"
             >
-            <span class="brand-text font-weight-light">GIS</span>
+            <span class="brand-text font-weight-light">PUPR</span>
         </a>
         <div class="my-sidebar-menu">
             <ul class="nav nav-sidebar nav-pills flex-column">
@@ -59,6 +65,20 @@
                            class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin' ? 'active' : ''}}">
                             <i class="fa fa-tachometer nav-icon" aria-hidden="true"></i>
                             <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/jenis"
+                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/jenis') ? 'active' : ''}}">
+                            <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
+                            <p>Jenis Quarry</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/perusahaan"
+                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/perusahaan') ? 'active' : ''}}">
+                            <i class="fa fa-address-book nav-icon" aria-hidden="true"></i>
+                            <p>Perusahaan</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -73,6 +93,13 @@
                            class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/kota' ? 'active' : ''}}">
                             <i class="fa fa-map-marker nav-icon" aria-hidden="true"></i>
                             <p>Kota</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/quarry"
+                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/quarry') ? 'active' : ''}}">
+                            <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
+                            <p>Quarry</p>
                         </a>
                     </li>
                 </nav>
@@ -90,9 +117,14 @@
     </div>
     <strong>Copyright &copy; 2022</strong> All rights reserved.
 </footer>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="{{ asset ('/adminlte/js/adminlte.js') }}"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('/datatables/dataTables.bootstrap4.min.js') }}"></script>

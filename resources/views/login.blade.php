@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <img src="{{ asset('/assets/icons/logo.png') }}" class="w-100 login-icon mb-3"/>
-                    <p class="login-title w-100 text-center mb-2"><span class="main-text">GIS</span> SYSTEM</p>
+                    <p class="login-title w-100 text-center mb-2">SISTEM INFORMASI <span class="main-text">QUARRY</span></p>
 {{--                    <hr>--}}
                     <form method="post">
                         @csrf
