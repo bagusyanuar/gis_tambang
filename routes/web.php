@@ -44,4 +44,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CityController::class, 'add']);
         Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\CityController::class, 'patch']);
     });
+
+    Route::group(['prefix' => 'quarry'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\QuarryController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\QuarryController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\QuarryController::class, 'patch']);
+    });
 });

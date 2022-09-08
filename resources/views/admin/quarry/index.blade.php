@@ -42,15 +42,15 @@
                     @foreach($data as $v)
                         <tr>
                             <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>
-                            <td class="f14">{{  }}</td>
-                            <td class="f14">{{  }}</td>
+                            <td class="f14">{{ $v->company->name }}</td>
+                            <td class="f14">{{ $v->category->name }}</td>
                             <td width="15%" class="text-center">
                                 <div class="dropdown">
                                     <a href="#" class="main-button-outline" data-toggle="dropdown">
                                         <span style="font-size: 12px;">Kelola</span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-                                        <a href="/admin/kota/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
+                                        <a href="/admin/quarry/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
                                         <a href="#" data-id="{{ $v->id }}"
                                            class="dropdown-item f12 btn-delete">Delete</a>
                                     </div>
