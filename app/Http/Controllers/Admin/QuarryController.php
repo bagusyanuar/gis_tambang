@@ -28,6 +28,9 @@ class QuarryController extends CustomController
 
     public function add()
     {
+        if ($this->request->method() === 'POST') {
+            dd($this->request->all());
+        }
         $cities = City::all();
         $categories = Category::all();
         $companies = Company::all();
@@ -35,6 +38,22 @@ class QuarryController extends CustomController
             'cities' => $cities,
             'categories' => $categories,
             'companies' => $companies,
+        ]);
+    }
+
+    public function store_tmp_media()
+    {
+        $path = storage_path('tmp/uploads');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        $file = $this->request->file('file');
+        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        $file->move($path, $name);
+
+        return response()->json([
+            'name' => $name,
+            'original_name' => $file->getClientOriginalName(),
         ]);
     }
 }

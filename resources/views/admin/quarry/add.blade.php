@@ -2,7 +2,9 @@
 
 @section('css')
     <link href="{{ asset('/adminlte/plugins/select2/select2.css') }}" rel="stylesheet">
-    <link href="{{ asset('/dropzone/min/dropzone.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"
+          integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 @endsection
 
 @section('content')
@@ -35,7 +37,7 @@
                     <p class="mb-0">Form Data Quarry</p>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data" id="form-input">
                         @csrf
 
                         <div class="form-group w-100 mb-2">
@@ -80,31 +82,49 @@
                             <textarea rows="3" class="form-control f14" id="address" placeholder="Alamat"
                                       name="address"></textarea>
                         </div>
-                        <div class="row mb-4">
+                        <div class="row mb-2">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="w-100 mb-2">
                                     <label for="latitude" class="form-label f14">Latitude</label>
-                                    <input type="number" step="any" class="form-control f14" id="latitude" placeholder="0" value="0"
+                                    <input type="number" step="any" class="form-control f14" id="latitude"
+                                           placeholder="0" value="0"
                                            name="latitude">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="w-100 mb-2">
                                     <label for="longitude" class="form-label f14">Longitude</label>
-                                    <input type="number" step="any" class="form-control f14" id="longitude" placeholder="0" value="0"
+                                    <input type="number" step="any" class="form-control f14" id="longitude"
+                                           placeholder="0" value="0"
                                            name="longitude">
                                 </div>
                             </div>
                         </div>
-                        <div class="dropzone" id="my_dropzone"></div>
+                        {{--                        <div class="custom-file mb-4">--}}
+                        {{--                            <input type="file" class="custom-file-input" id="customFile" multiple>--}}
+                        {{--                            <label class="custom-file-label" for="customFile">Choose file</label>--}}
+                        {{--                        </div>--}}
+                        <div class="mb-4">
+                            <label for="document">Photo</label>
+                            <div class="needsclick dropzone" id="document-dropzone">
+
+                            </div>
+                        </div>
                         <hr>
                         <div class="w-100 text-right">
-                            <button type="submit" class="main-button f14">
+                            <button type="submit" class="main-button f14" id="btn-save">
                                 <i class="fa fa-check mr-2"></i>
                                 <span>Simpan</span>
                             </button>
                         </div>
+                        <input type="file" name="abc">
                     </form>
+                    {{--                    <form id="id_dropzone"--}}
+                    {{--                          action="/admin/quarry/media"--}}
+                    {{--                          enctype="multipart/form-data"--}}
+                    {{--                          method="post">--}}
+                    {{--                    </form>--}}
+                    {{--                    <div class="dropzone" form="id_dropzone"></div>--}}
                 </div>
             </div>
 
@@ -116,21 +136,85 @@
     <script src="{{ asset('/adminlte/plugins/select2/select2.js') }}"></script>
     <script src="{{ asset('/adminlte/plugins/select2/select2.full.js') }}"></script>
     <script src="{{ asset('/js/helper.js') }}"></script>
-    <script src="{{ asset('/dropzone/min/dropzone.min.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"
+            integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve'
             });
-            Dropzone.options.my_dropzone = {
-                maxFiles: 5,
-                maxFilesize: 4,
-                dictDefaultMessage: 'Upload your files here',
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+
+            $(".custom-file-input").on("change", function () {
+                var files = Array.from(this.files)
+                var fileName = files.map(f => {
+                    return f.name
+                }).join(", ")
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+        $(document).ready(function () {
+            $("#id_dropzone").dropzone({
+                maxFiles: 2000,
+                url: "/admin/quarry/media",
+                success: function (file, response) {
+                    console.log(response);
+                }
+            });
+
+            var uploadedDocumentMap = {}
+            $("#document-dropzone").dropzone({
+                {{--url: '{{ route('products.storeMedia') }}',--}}
+                url: '/admin/quarry/tambah',
+                maxFilesize: 2, // MB
                 addRemoveLinks: true,
-                autoProcessQueue: false
-            }
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoProcessQueue: false,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                init: function () {
+                    var myDropzone = this;
+                    // Update selector to match your button
+                    $("#btn-save").click(function (e) {
+                        // e.preventDefault();
+                        myDropzone.processQueue();
+                    });
+
+                    this.on('sending', function (file, xhr, formData) {
+                        // Append all form inputs to the formData Dropzone will POST
+                        console.log(file);
+                        var data = $('#form-input').serializeArray();
+                        $.each(data, function (key, el) {
+                            formData.append(el.name, el.value);
+                        });
+                        // formData.append('<input type="file" hidden name="images[]"/>', file)
+
+                    });
+
+                    this.on("addedfile", function (file) {
+                        console.log(file);
+                        $('#form-input').append('<input type="file" hidden name="images[]" value="' + file.name + '"/>')
+                    });
+                }
+                // success: function(file, response) {
+                //     $('form').append('<input type="hidden" name="photo[]" value="' + response.name + '">')
+                //     uploadedDocumentMap[file.name] = response.name
+                // },
+                // removedfile: function(file) {
+                //     file.previewElement.remove()
+                //     var name = ''
+                //     if (typeof file.file_name !== 'undefined') {
+                //         name = file.file_name
+                //     } else {
+                //         name = uploadedDocumentMap[file.name]
+                //     }
+                //     $('form').find('input[name="photo[]"][value="' + name + '"]').remove()
+                // }
+            });
         })
     </script>
 @endsection
