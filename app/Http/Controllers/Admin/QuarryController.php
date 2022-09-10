@@ -9,6 +9,9 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Quarry;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class QuarryController extends CustomController
 {
@@ -29,7 +32,32 @@ class QuarryController extends CustomController
     public function add()
     {
         if ($this->request->method() === 'POST') {
-            dd($this->request->all());
+            DB::beginTransaction();
+            try {
+                $request = [
+                    'company_id' => $this->postField('company'),
+                    'category_id' => $this->postField('category'),
+                    'city_id' => $this->postField('city'),
+                    'large' => $this->postField('large'),
+                    'permission' => $this->postField('permission'),
+                    'address' => $this->postField('address'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
+                ];
+                $quarry = Quarry::create($request);
+                if ($this->request->hasFile('file')) {
+                    foreach ($this->request->file('file') as $file) {
+                        $name = $this->uuidGenerator() . '.' . $file->getClientOriginalExtension();
+                        Storage::disk('quarry')->put($name, File::get($file));
+                    }
+                }
+                DB::commit();
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Data..');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+
         }
         $cities = City::all();
         $categories = Category::all();

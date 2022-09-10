@@ -100,14 +100,9 @@
                                 </div>
                             </div>
                         </div>
-                        {{--                        <div class="custom-file mb-4">--}}
-                        {{--                            <input type="file" class="custom-file-input" id="customFile" multiple>--}}
-                        {{--                            <label class="custom-file-label" for="customFile">Choose file</label>--}}
-                        {{--                        </div>--}}
                         <div class="mb-4">
                             <label for="document">Photo</label>
                             <div class="needsclick dropzone" id="document-dropzone">
-
                             </div>
                         </div>
                         <hr>
@@ -117,14 +112,7 @@
                                 <span>Simpan</span>
                             </button>
                         </div>
-                        <input type="file" name="abc">
                     </form>
-                    {{--                    <form id="id_dropzone"--}}
-                    {{--                          action="/admin/quarry/media"--}}
-                    {{--                          enctype="multipart/form-data"--}}
-                    {{--                          method="post">--}}
-                    {{--                    </form>--}}
-                    {{--                    <div class="dropzone" form="id_dropzone"></div>--}}
                 </div>
             </div>
 
@@ -144,27 +132,11 @@
             $('.select2').select2({
                 width: 'resolve'
             });
-
-            $(".custom-file-input").on("change", function () {
-                var files = Array.from(this.files)
-                var fileName = files.map(f => {
-                    return f.name
-                }).join(", ")
-                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });
         })
     </script>
     <script type="text/javascript">
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
-            $("#id_dropzone").dropzone({
-                maxFiles: 2000,
-                url: "/admin/quarry/media",
-                success: function (file, response) {
-                    console.log(response);
-                }
-            });
-
             var uploadedDocumentMap = {}
             $("#document-dropzone").dropzone({
                 {{--url: '{{ route('products.storeMedia') }}',--}}
@@ -180,24 +152,29 @@
                     var myDropzone = this;
                     // Update selector to match your button
                     $("#btn-save").click(function (e) {
-                        // e.preventDefault();
+                        e.preventDefault();
                         myDropzone.processQueue();
                     });
 
                     this.on('sending', function (file, xhr, formData) {
                         // Append all form inputs to the formData Dropzone will POST
-                        console.log(file);
+                        // console.log(file);
                         var data = $('#form-input').serializeArray();
                         $.each(data, function (key, el) {
-                            formData.append(el.name, el.value);
+                            // formData.append(el.name, el.value);
                         });
-                        // formData.append('<input type="file" hidden name="images[]"/>', file)
-
+                        formData.append('file', file);
                     });
 
                     this.on("addedfile", function (file) {
                         console.log(file);
-                        $('#form-input').append('<input type="file" hidden name="images[]" value="' + file.name + '"/>')
+                        let name = file.name;
+                        let reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        console.log(reader.result);
+                        let new_file = new File([reader.result], name);
+                        // console.log(new_file)
+                        $('#form-input').append('<input type="file" hidden name="images[]" value="' + new_file + '"/>')
                     });
                 }
                 // success: function(file, response) {

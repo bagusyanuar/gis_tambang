@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->middleware('guest');
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
 
     Route::group(['prefix' => 'jenis'], function () {
