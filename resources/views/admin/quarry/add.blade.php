@@ -18,6 +18,7 @@
             Swal.fire("Gagal!", '{{\Illuminate\Support\Facades\Session::get('failed')}}', "error")
         </script>
     @endif
+    <div class="lazy-backdrop" id="overlay-loading"></div>
     <div class="container-fluid">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
@@ -107,10 +108,10 @@
                         </div>
                         <hr>
                         <div class="w-100 text-right">
-                            <button type="submit" class="main-button f14" id="btn-save">
+                            <a href="#" class="main-button f14" id="btn-save">
                                 <i class="fa fa-check mr-2"></i>
                                 <span>Simpan</span>
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -139,42 +140,44 @@
         $(document).ready(function () {
             var uploadedDocumentMap = {}
             $("#document-dropzone").dropzone({
-                {{--url: '{{ route('products.storeMedia') }}',--}}
                 url: '/admin/quarry/tambah',
                 maxFilesize: 2, // MB
                 addRemoveLinks: true,
                 acceptedFiles: ".jpeg,.jpg,.png,.gif",
                 autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 10,
+                paramName: "images",
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 init: function () {
                     var myDropzone = this;
                     // Update selector to match your button
-                    $("#btn-save").click(function (e) {
+                    $("#btn-save").on('click', function (e) {
                         e.preventDefault();
+                        blockLoading(true);
                         myDropzone.processQueue();
                     });
-
+                    // var fd;
                     this.on('sending', function (file, xhr, formData) {
                         // Append all form inputs to the formData Dropzone will POST
-                        // console.log(file);
                         var data = $('#form-input').serializeArray();
                         $.each(data, function (key, el) {
-                            // formData.append(el.name, el.value);
+                            formData.append(el.name, el.value);
                         });
-                        formData.append('file', file);
                     });
 
-                    this.on("addedfile", function (file) {
-                        console.log(file);
-                        let name = file.name;
-                        let reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        console.log(reader.result);
-                        let new_file = new File([reader.result], name);
-                        // console.log(new_file)
-                        $('#form-input').append('<input type="file" hidden name="images[]" value="' + new_file + '"/>')
+                    this.on('successmultiple', function(file, response) {
+                        blockLoading(false);
+                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data...');
+                        window.location.reload();
+
+                    });
+
+                    this.on('errormultiple', function(file, response) {
+                        blockLoading(false);
+                        ErrorAlert('Error', 'Terjadi Kesalahan Server....')
                     });
                 }
                 // success: function(file, response) {

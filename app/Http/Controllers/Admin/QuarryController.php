@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Quarry;
+use App\Models\QuarryImage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -45,17 +46,25 @@ class QuarryController extends CustomController
                     'longitude' => $this->postField('longitude'),
                 ];
                 $quarry = Quarry::create($request);
-                if ($this->request->hasFile('file')) {
-                    foreach ($this->request->file('file') as $file) {
+                if ($this->request->hasFile('images')) {
+                    foreach ($this->request->file('images') as $file) {
                         $name = $this->uuidGenerator() . '.' . $file->getClientOriginalExtension();
+                        $file_name = '/assets/images/quarries/'.$name;
                         Storage::disk('quarry')->put($name, File::get($file));
+                        $images_data = [
+                            'quarry_id' => $quarry->id,
+                            'image' => $file_name
+                        ];
+                        QuarryImage::create($images_data);
                     }
                 }
                 DB::commit();
-                return redirect()->back()->with('success', 'Berhasil Menambahkan Data..');
+                return $this->jsonResponse('sucess', 200, [
+                    'request' => $this->request->all(),
+                ]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                return redirect()->back()->with('failed', $e->getMessage());
+                return $this->jsonResponse('failed', 500, $e->getMessage());
             }
 
         }
