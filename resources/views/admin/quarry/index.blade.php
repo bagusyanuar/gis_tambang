@@ -34,7 +34,9 @@
                     <tr>
                         <th width="5%" class="text-center f14">#</th>
                         <th width="20%" class="f14">Perusahaan</th>
-                        <th width="20%" class="f14">Jenis Quarry</th>
+                        <th width="15%" class="f14">Jenis Quarry</th>
+                        <th width="20%" class="f14">Kota</th>
+                        <th width="20%" class="f14">Provinsi</th>
                         <th width="10%" class="text-center f14">Action</th>
                     </tr>
                     </thead>
@@ -44,6 +46,8 @@
                             <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>
                             <td class="f14">{{ $v->company->name }}</td>
                             <td class="f14">{{ $v->category->name }}</td>
+                            <td class="f14">{{ ucwords(strtolower($v->city->name)) }}</td>
+                            <td class="f14">{{ ucwords(strtolower($v->city->province->name)) }}</td>
                             <td width="15%" class="text-center">
                                 <div class="dropdown">
                                     <a href="#" class="main-button-outline" data-toggle="dropdown">

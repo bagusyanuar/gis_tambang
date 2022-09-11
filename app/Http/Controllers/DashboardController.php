@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\Quarry;
 
 class DashboardController extends CustomController
 {
@@ -15,6 +16,8 @@ class DashboardController extends CustomController
 
     public function index()
     {
-        return view('admin.dashboard');
+        $quarries = Quarry::all();
+        $c_quarries = count($quarries);
+        return view('admin.dashboard')->with(['quarries' => $c_quarries]);
     }
 }
