@@ -1,5 +1,12 @@
 @extends('admin.layout')
 
+@section('css')
+    <style>
+        .dt-control {
+            cursor: pointer;
+        }
+    </style>
+@endsection
 @section('content')
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
@@ -32,6 +39,7 @@
                 <table id="table-data" class="display w-100 table table-bordered">
                     <thead>
                     <tr>
+                        <th width="5%" class="text-center f14 no-sort"></th>
                         <th width="5%" class="text-center f14">#</th>
                         <th width="20%" class="f14">Perusahaan</th>
                         <th width="15%" class="f14">Jenis Quarry</th>
@@ -43,6 +51,9 @@
                     <tbody>
                     @foreach($data as $v)
                         <tr>
+                            <td width="5%" class="text-center f14 dt-control">
+                                <i class="fa fa-plus-square-o main-text expand-icon"></i>
+                            </td>
                             <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>
                             <td class="f14">{{ $v->company->name }}</td>
                             <td class="f14">{{ $v->category->name }}</td>
@@ -71,9 +82,42 @@
 
 @section('js')
     <script type="text/javascript">
+        function detailElement(d) {
+            return '<div>' +
+                '<p class="font-weight-bold">Detail Quarry</p>' +
+                '<table cellpadding="5" cellspacing="0" border="0">' +
+                '<tr></tr>' +
+                '</table>' +
+                '</div>';
+        }
+
+
         $(document).ready(function () {
-            $('#table-data').DataTable({
+            var table = $('#table-data').DataTable({
                 scrollX: true,
+                responsive: true,
+            });
+
+            $('#table-data tbody').on('click', 'td.dt-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                var i = $(this).children();
+                console.log(i);
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                    i.removeClass('fa fa-minus-square-o');
+                    i.addClass('fa fa-plus-square-o');
+                } else {
+                    // Open this row
+                    row.child(detailElement(row.data())).show();
+                    tr.addClass('shown');
+                    i.removeClass('fa fa-plus-square-o');
+                    i.addClass('fa fa-minus-square-o');
+                    console.log(row.data());
+                    // console.log(tr.closest('i'));
+                }
             });
         });
     </script>
