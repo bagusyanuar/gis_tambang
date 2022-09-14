@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->middleware('guest');
-
+Route::get('/quarry/map', [\App\Http\Controllers\DashboardController::class, 'geo_json_data']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);

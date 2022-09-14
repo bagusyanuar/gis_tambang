@@ -320,7 +320,7 @@ table.dataTable {
 
 /*select2*/
 .select2-selection {
-    height: 35px !important;
+    min-height: 35px !important;
     line-height: 40px !important;
 }
 
