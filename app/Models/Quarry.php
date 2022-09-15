@@ -10,6 +10,7 @@ class Quarry extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'company_id',
         'category_id',
         'city_id',

@@ -93,4 +93,16 @@ class QuarryController extends CustomController
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
+
+    public function data()
+    {
+        try {
+            $data = Quarry::with(['company', 'category', 'city.province'])
+                ->orderBy('id', 'DESC')
+                ->get();
+            return $this->basicDataTables($data);
+        }catch (\Exception $e) {
+            return $this->basicDataTables([]);
+        }
+    }
 }

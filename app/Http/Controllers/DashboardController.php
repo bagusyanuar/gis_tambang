@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Quarry;
 
@@ -20,17 +21,27 @@ class DashboardController extends CustomController
         $quarries = Quarry::all();
         $c_quarries = count($quarries);
         $cities = City::all();
-
-        return view('admin.dashboard')->with(['quarries' => $c_quarries, 'cities' => $cities]);
+        $categories = Category::all();
+        return view('admin.dashboard')->with(['quarries' => $c_quarries, 'cities' => $cities, 'categories' => $categories]);
     }
 
     public function geo_json_data()
     {
         try {
             $categories = $this->field('categories');
-            return $this->jsonResponse('success', 200, $categories);
-            $quarries = Quarry::with(['company', 'category', 'city'])
-                ->get();
+            $cities = $this->field('cities');
+//            return $this->jsonResponse('success', 200, [
+//                $categories, $cities
+//            ]);
+            $query = Quarry::with(['company', 'category', 'city']);
+            if($categories !== null) {
+                $query->whereIn('category_id', $categories);
+            }
+
+            if($cities !== null) {
+                $query->whereIn('city_id', $cities);
+            }
+            $quarries = $query->get();
             $data = $quarries->map(function ($quarry) {
                 return [
                     'type' => 'Feature',

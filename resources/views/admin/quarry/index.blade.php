@@ -41,7 +41,7 @@
                     <tr>
                         <th width="5%" class="text-center f14 no-sort"></th>
                         <th width="5%" class="text-center f14">#</th>
-                        <th width="20%" class="f14">Perusahaan</th>
+                        <th width="20%" class="f14">Nama</th>
                         <th width="15%" class="f14">Jenis Quarry</th>
                         <th width="20%" class="f14">Kota</th>
                         <th width="20%" class="f14">Provinsi</th>
@@ -49,30 +49,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($data as $v)
-                        <tr>
-                            <td width="5%" class="text-center f14 dt-control">
-                                <i class="fa fa-plus-square-o main-text expand-icon"></i>
-                            </td>
-                            <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>
-                            <td class="f14">{{ $v->company->name }}</td>
-                            <td class="f14">{{ $v->category->name }}</td>
-                            <td class="f14">{{ ucwords(strtolower($v->city->name)) }}</td>
-                            <td class="f14">{{ ucwords(strtolower($v->city->province->name)) }}</td>
-                            <td width="15%" class="text-center">
-                                <div class="dropdown">
-                                    <a href="#" class="main-button-outline" data-toggle="dropdown">
-                                        <span style="font-size: 12px;">Kelola</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-                                        <a href="/admin/quarry/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
-                                        <a href="#" data-id="{{ $v->id }}"
-                                           class="dropdown-item f12 btn-delete">Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                    {{--                    @foreach($data as $v)--}}
+                    {{--                        <tr>--}}
+                    {{--                            <td width="5%" class="text-center f14 dt-control">--}}
+                    {{--                                <i class="fa fa-plus-square-o main-text expand-icon"></i>--}}
+                    {{--                            </td>--}}
+                    {{--                            <td width="5%" class="text-center f14">{{ $loop->index + 1 }}</td>--}}
+                    {{--                            <td class="f14">{{ $v->company->name }}</td>--}}
+                    {{--                            <td class="f14">{{ $v->category->name }}</td>--}}
+                    {{--                            <td class="f14">{{ ucwords(strtolower($v->city->name)) }}</td>--}}
+                    {{--                            <td class="f14">{{ ucwords(strtolower($v->city->province->name)) }}</td>--}}
+                    {{--                            <td width="15%" class="text-center">--}}
+                    {{--                                <div class="dropdown">--}}
+                    {{--                                    <a href="#" class="main-button-outline" data-toggle="dropdown">--}}
+                    {{--                                        <span style="font-size: 12px;">Kelola</span>--}}
+                    {{--                                    </a>--}}
+                    {{--                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">--}}
+                    {{--                                        <a href="/admin/quarry/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>--}}
+                    {{--                                        <a href="#" data-id="{{ $v->id }}"--}}
+                    {{--                                           class="dropdown-item f12 btn-delete">Delete</a>--}}
+                    {{--                                    </div>--}}
+                    {{--                                </div>--}}
+                    {{--                            </td>--}}
+                    {{--                        </tr>--}}
+                    {{--                    @endforeach--}}
                     </tbody>
                 </table>
             </div>
@@ -81,28 +81,28 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
+        var table;
+
         function detailElement(d) {
             return '<div>' +
                 '<p class="font-weight-bold">Detail Quarry</p>' +
                 '<table cellpadding="5" cellspacing="0" border="0">' +
-                '<tr></tr>' +
+                '<tr>' +
+                '<td>Perusahaan</td>' +
+                '<td>: '+d['company']['name']+'</td>' +
+                '</tr>' +
                 '</table>' +
                 '</div>';
         }
 
-
-        $(document).ready(function () {
-            var table = $('#table-data').DataTable({
-                scrollX: true,
-                responsive: true,
-            });
-
+        function setExpandDetail() {
             $('#table-data tbody').on('click', 'td.dt-control', function () {
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
                 var i = $(this).children();
-                console.log(i);
+
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
@@ -111,6 +111,7 @@
                     i.addClass('fa fa-plus-square-o');
                 } else {
                     // Open this row
+                    console.log(row.data());
                     row.child(detailElement(row.data())).show();
                     tr.addClass('shown');
                     i.removeClass('fa fa-plus-square-o');
@@ -119,6 +120,53 @@
                     // console.log(tr.closest('i'));
                 }
             });
+        }
+
+        $(document).ready(function () {
+            table = DataTableGenerator('#table-data', '/admin/quarry/data', [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null, render: function () {
+                        return '<i class="fa fa-plus-square-o main-text expand-icon"></i>';
+                    }
+                },
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
+                {data: 'name'},
+                {data: 'category.name'},
+                {
+                    data: null, render: function (data, type, row, meta) {
+                        return data['city']['name'];
+                    }
+                },
+                {
+                    data: null, render: function (data, type, row, meta) {
+                        return data['city']['province']['name'];
+                    }
+                },
+                {
+                    data: null, render: function (data, type, row, meta) {
+                        return '<div class="dropdown">\n' +
+                            '                                    <a href="#" class="main-button-outline" data-toggle="dropdown">\n' +
+                            '                                        <span style="font-size: 12px;">Kelola</span>\n' +
+                            '                                    </a>\n' +
+                            '                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">\n' +
+                            '                                        <a href="/admin/quarry/' + data['id'] + '/edit" class="dropdown-item f12">Edit</a>\n' +
+                            '                                        <a href="#" data-id="' + data['id'] + '"' +
+                            '                                           class="dropdown-item f12 btn-delete">Delete</a>\n' +
+                            '                                    </div>\n' +
+                            '                                </div>';
+                    }
+                },
+            ], [], function (d) {
+            }, {
+                scrollX: true,
+                responsive: true,
+                "fnDrawCallback": function (settings) {
+                    setExpandDetail();
+                }
+            });
+            setExpandDetail();
         });
     </script>
 @endsection

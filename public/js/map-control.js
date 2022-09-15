@@ -3,6 +3,7 @@ var default_center = {
     lat: -8.219078,
     lng: 114.4373073
 };
+var geo_json;
 
 function initMap(element) {
     if (map_container === undefined) {
@@ -12,37 +13,44 @@ function initMap(element) {
             attribution: '© OpenStreetMap'
         }).addTo(map_container);
     }
-    getGeoJSONQuarry();
 }
 
-function getGeoJSONQuarry() {
-    // try {
-        // let response = await $.get('/quarry/map');
-        $.ajax({
-            url: '/quarry/map',
-            type: 'GET',
-            data: {
-                categories: ['a', 'b', 'c']
-            },
-            success: function (response) {
-                console.log(response);
-            },
-            error: function () {
-
-            }
-        });
-        // let payload = response['payload'];
-        // createMarker(payload);
-
-    // }catch (e) {
-    //     console.log(e);
-    // }
+function getGeoJSONQuarry(cities = [], categories = []) {
+    $.ajax({
+        url: '/quarry/map',
+        type: 'GET',
+        data: {
+            cities: cities,
+            categories: categories
+        },
+        success: function (response) {
+            let payload = response['payload'];
+            removeAllMarkers();
+            createMarker(payload);
+        },
+        error: function () {
+        }
+    });
 }
 
 function createMarker(data) {
-    L.geoJSON(data, {
-
+    geo_json = L.geoJSON(data, {
     }).bindPopup(function (layer) {
-        return ('<div><strong>Detail</strong></div>')
+        console.log(layer.feature.properties.name);
+        return popUpDetail(layer.feature.properties);
     }).addTo(map_container);
+}
+
+function removeAllMarkers() {
+    if(geo_json !== undefined) {
+        map_container.removeLayer(geo_json);
+    }
+}
+
+function popUpDetail(d) {
+    return ('<div>' +
+        '<p class="mb-1 font-weight-bold">'+d.name+'</p>' +
+        '<p  class="mt-0 mb-0 font-weight-bold">'+d.company.name+'<span style="color: #777777; font-weight: normal"> ('+d.category.name+')</span></p>' +
+        '<a href="#" style="font-size: 12px;">Detail</a>' +
+        '</div>');
 }
