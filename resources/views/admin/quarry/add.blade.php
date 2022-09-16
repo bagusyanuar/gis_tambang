@@ -40,7 +40,11 @@
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data" id="form-input">
                         @csrf
-
+                        <div class="w-100 mb-2">
+                            <label for="name" class="form-label f14">Nama Quarry</label>
+                            <input type="text" class="form-control f14" id="name" placeholder="Nama Quarry"
+                                   name="name">
+                        </div>
                         <div class="form-group w-100 mb-2">
                             <label for="city" class="f14">Kota / Kabupaten</label>
                             <select class="select2 f14" name="city" id="city" style="width: 100%;">

@@ -51,5 +51,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
         Route::post('/media', [\App\Http\Controllers\Admin\QuarryController::class, 'store_tmp_media'])->name('products.storeMedia');
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\QuarryController::class, 'add']);
         Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\QuarryController::class, 'patch']);
+        Route::get('/{id}/detail', [\App\Http\Controllers\Admin\QuarryController::class, 'show']);
     });
 });

@@ -36,6 +36,7 @@ class QuarryController extends CustomController
             DB::beginTransaction();
             try {
                 $request = [
+                    'name' => $this->postField('name'),
                     'company_id' => $this->postField('company'),
                     'category_id' => $this->postField('category'),
                     'city_id' => $this->postField('city'),
@@ -78,6 +79,11 @@ class QuarryController extends CustomController
         ]);
     }
 
+    public function show($id)
+    {
+        $data = Quarry::with(['company', 'category', 'city', 'images'])->findOrFail($id);
+        return view('admin.quarry.detail')->with(['data' => $data]);
+    }
     public function store_tmp_media()
     {
         $path = storage_path('tmp/uploads');
@@ -105,4 +111,5 @@ class QuarryController extends CustomController
             return $this->basicDataTables([]);
         }
     }
+
 }

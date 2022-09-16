@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Company;
 use App\Models\Quarry;
 
 class DashboardController extends CustomController
@@ -22,7 +23,8 @@ class DashboardController extends CustomController
         $c_quarries = count($quarries);
         $cities = City::all();
         $categories = Category::all();
-        return view('admin.dashboard')->with(['quarries' => $c_quarries, 'cities' => $cities, 'categories' => $categories]);
+        $companies = Company::all();
+        return view('admin.dashboard')->with(['quarries' => $c_quarries, 'cities' => $cities, 'categories' => $categories, 'companies' => count($companies)]);
     }
 
     public function geo_json_data()

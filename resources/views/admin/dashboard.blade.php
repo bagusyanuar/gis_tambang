@@ -59,7 +59,7 @@
                 <span class="info-box-icon bg-success"><i class="fa fa-address-book"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Perusahaan</span>
-                    <span class="info-box-number">{{ $quarries }}</span>
+                    <span class="info-box-number">{{ $companies }}</span>
                 </div>
             </div>
         </div>
@@ -109,13 +109,13 @@
             $('#cities').on('change', function () {
                 cities = $('#cities').val();
                 console.log(cities);
-                getGeoJSONQuarry(cities, categories);
-            })
+                getGeoJSONQuarry(cities, categories, false);
+            });
             $('#categories').on('change', function () {
                 categories = $('#categories').val();
                 console.log(categories);
-                getGeoJSONQuarry(cities, categories);
-            })
+                getGeoJSONQuarry(cities, categories, false);
+            });
         })
     </script>
 @endsection

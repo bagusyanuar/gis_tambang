@@ -87,13 +87,31 @@
 
         function detailElement(d) {
             return '<div>' +
-                '<p class="font-weight-bold">Detail Quarry</p>' +
-                '<table cellpadding="5" cellspacing="0" border="0">' +
-                '<tr>' +
-                '<td>Perusahaan</td>' +
-                '<td>: '+d['company']['name']+'</td>' +
-                '</tr>' +
-                '</table>' +
+                '<p class="font-weight-bold">Informasi Quarry</p>' +
+                '<div class="row">' +
+                '<div class="col-lg-3 col-md-4 col-sm-6">' +
+                '<p>Perusahaan</p>' +
+                '</div>' +
+                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['company']['name']+ '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div class="col-lg-3 col-md-4 col-sm-6">' +
+                '<p>Luas</p>' +
+                '</div>' +
+                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['large']+ '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div class="col-lg-3 col-md-4 col-sm-6">' +
+                '<p>Ijin</p>' +
+                '</div>' +
+                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['permission']+ '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div class="col-lg-3 col-md-4 col-sm-6">' +
+                '<p>Alamat</p>' +
+                '</div>' +
+                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['address']+ '</div>' +
+                '</div>' +
                 '</div>';
         }
 
@@ -152,8 +170,8 @@
                             '                                    </a>\n' +
                             '                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">\n' +
                             '                                        <a href="/admin/quarry/' + data['id'] + '/edit" class="dropdown-item f12">Edit</a>\n' +
-                            '                                        <a href="#" data-id="' + data['id'] + '"' +
-                            '                                           class="dropdown-item f12 btn-delete">Delete</a>\n' +
+                            '                                        <a href="#" data-id="' + data['id'] + '" class="dropdown-item f12 btn-delete">Delete</a>\n' +
+                            '<a href="/admin/quarry/' + data['id'] + '/detail" class="dropdown-item f12">Detail</a>' +
                             '                                    </div>\n' +
                             '                                </div>';
                     }

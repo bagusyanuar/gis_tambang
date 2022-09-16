@@ -36,4 +36,9 @@ class Quarry extends Model
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(QuarryImage::class, 'quarry_id');
+    }
 }
