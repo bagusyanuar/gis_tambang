@@ -17,13 +17,18 @@ function initMap(element) {
     }
 }
 
-function initSingleMap(element) {
+function initSingleMap(element, coordinates = []) {
     if (single_map_container === undefined) {
         single_map_container = L.map(element).setView([default_center['lat'], default_center['lng']], 13);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 16,
-            attribution: '© OpenStreetMap'
-        }).addTo(single_map_container);
+        // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     maxZoom: 16,
+        //     attribution: '© OpenStreetMap'
+        // }).addTo(single_map_container);
+        // let layerGroup = L.layerGroup();
+        // let marker = L.marker(coordinates);
+        // layerGroup.addLayer(marker);
+        // single_map_container.addLayer(layerGroup);
+        // single_map_container.panTo(new L.LatLng(coordinates[0], coordinates[1]));
     }
 }
 
@@ -70,6 +75,10 @@ function removeAllMarkers() {
 }
 
 function createSingleMarker(coordinates = []) {
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 16,
+        attribution: '© OpenStreetMap'
+    }).addTo(single_map_container);
     let layerGroup = L.layerGroup();
     let marker = L.marker(coordinates);
     layerGroup.addLayer(marker);
