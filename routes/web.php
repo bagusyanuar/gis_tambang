@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->middleware('guest');
+Route::get( '/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 Route::get('/quarry/map', [\App\Http\Controllers\DashboardController::class, 'geo_json_data']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {

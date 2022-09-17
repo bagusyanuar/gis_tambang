@@ -41,7 +41,7 @@
                 <span>{{ auth()->user()->username }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-                <a href="#" class="dropdown-item navbar-link-item">
+                <a href="/logout" class="dropdown-item navbar-link-item">
                     <i class="fa fa-power-off mr-2"></i>Keluar</a>
             </div>
         </li>
