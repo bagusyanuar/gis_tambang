@@ -82,6 +82,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/admin/member"
+                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/member') ? 'active' : ''}}">
+                            <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                            <p>Member</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/admin/provinsi"
                            class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/provinsi') ? 'active' : ''}}">
                             <i class="fa fa-map nav-icon" aria-hidden="true"></i>

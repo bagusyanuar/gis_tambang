@@ -34,6 +34,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
         Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\CompanyController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => 'member'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\MemberController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\MemberController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\MemberController::class, 'patch']);
+        Route::match(['post', 'get'], '/{id}/password', [\App\Http\Controllers\Admin\MemberController::class, 'change_password']);
+        Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\MemberController::class, 'destroy']);
+    });
+
     Route::group(['prefix' => 'provinsi'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\ProvinceController::class, 'index']);
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\ProvinceController::class, 'add']);
