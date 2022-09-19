@@ -54,26 +54,6 @@
             </li>
         </ol>
     </div>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-info"><i class="fa fa-briefcase"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Quarry</span>
-                    <span class="info-box-number">{{ $quarries }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-success"><i class="fa fa-address-book"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Perusahaan</span>
-                    <span class="info-box-number">{{ $companies }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="card card-outline card-warning">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
@@ -86,7 +66,8 @@
                     <div class="dropdown-menu p-3 dropdown-menu-right" style="z-index: 1001;" id="drop-filter">
                         <div class="form-group">
                             <label for="categories" class="f14">Jenis Quarry</label>
-                            <select class="select2 f14" name="categories[]" id="categories" style="width: 100%;" multiple="multiple">
+                            <select class="select2 f14" name="categories[]" id="categories" style="width: 100%;"
+                                    multiple="multiple">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
                                             class="f14">{{ ucwords(strtolower($category->name)) }}</option>
@@ -95,7 +76,8 @@
                         </div>
                         <div class="form-group w-100">
                             <label for="cities" class="f14">Kota / Kabupaten</label>
-                            <select class="select2 f14" name="cities[]" id="cities" style="width: 100%;" multiple="multiple">
+                            <select class="select2 f14" name="cities[]" id="cities" style="width: 100%;"
+                                    multiple="multiple">
                                 @foreach($cities as $city)
                                     <option value="{{ $city->id }}"
                                             class="f14">{{ ucwords(strtolower($city->name)) }}</option>
@@ -110,7 +92,6 @@
             <div id="map"></div>
         </div>
     </div>
-
 @endsection
 @section('js')
     <script src="{{ asset('/adminlte/plugins/select2/select2.js') }}"></script>

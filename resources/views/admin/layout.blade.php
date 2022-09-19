@@ -21,6 +21,10 @@
     <title>Document</title>
     @yield('css')
 </head>
+@php
+    $roles = auth()->user()->roles;
+    $isAdmin = in_array('admin', $roles);
+@endphp
 <body class="hold-transition sidebar-mini layout-fixed">
 <nav class="main-header navbar navbar-expand elevation-1">
     <ul class="navbar-nav align-items-center">
@@ -49,7 +53,7 @@
 </nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-1">
     <div class="sidebar">
-        <a href="/admin" class="brand-link" style="border-bottom: 1px solid #a0aec0">
+        <a href="{{ $isAdmin ? '/admin' : '/member' }}" class="brand-link" style="border-bottom: 1px solid #a0aec0">
             <img src="{{ asset('assets/icons/logo.png') }}" style="width: 34px !important;"
                  alt="AdminLTE Logo"
                  class="brand-image text-center"
@@ -61,54 +65,59 @@
                 <nav class="mt-2 nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                      data-accordion="false">
                     <li class="nav-item">
-                        <a href="/admin"
-                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin' ? 'active' : ''}}">
+                        @php
+                            $dashboardPath = $isAdmin ? 'admin' : 'member';
+                        @endphp
+                        <a href="{{ $isAdmin ? '/admin' : '/member' }}"
+                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == $dashboardPath ? 'active' : ''}}">
                             <i class="fa fa-tachometer nav-icon" aria-hidden="true"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/admin/jenis"
-                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/jenis') ? 'active' : ''}}">
-                            <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
-                            <p>Jenis Quarry</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/perusahaan"
-                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/perusahaan') ? 'active' : ''}}">
-                            <i class="fa fa-address-book nav-icon" aria-hidden="true"></i>
-                            <p>Perusahaan</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/member"
-                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/member') ? 'active' : ''}}">
-                            <i class="fa fa-users nav-icon" aria-hidden="true"></i>
-                            <p>Member</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/provinsi"
-                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/provinsi') ? 'active' : ''}}">
-                            <i class="fa fa-map nav-icon" aria-hidden="true"></i>
-                            <p>Provinsi</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/kota"
-                           class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/kota' ? 'active' : ''}}">
-                            <i class="fa fa-map-marker nav-icon" aria-hidden="true"></i>
-                            <p>Kota</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/quarry"
-                           class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/quarry') ? 'active' : ''}}">
-                            <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
-                            <p>Quarry</p>
-                        </a>
-                    </li>
+                    @if($isAdmin)
+                        <li class="nav-item">
+                            <a href="/admin/jenis"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/jenis') ? 'active' : ''}}">
+                                <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
+                                <p>Jenis Quarry</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/perusahaan"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/perusahaan') ? 'active' : ''}}">
+                                <i class="fa fa-address-book nav-icon" aria-hidden="true"></i>
+                                <p>Perusahaan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/member"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/member') ? 'active' : ''}}">
+                                <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                                <p>Member</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/provinsi"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/provinsi') ? 'active' : ''}}">
+                                <i class="fa fa-map nav-icon" aria-hidden="true"></i>
+                                <p>Provinsi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/kota"
+                               class="nav-link {{ \Illuminate\Support\Facades\Request::path() == 'admin/kota' ? 'active' : ''}}">
+                                <i class="fa fa-map-marker nav-icon" aria-hidden="true"></i>
+                                <p>Kota</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/quarry"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/quarry') ? 'active' : ''}}">
+                                <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
+                                <p>Quarry</p>
+                            </a>
+                        </li>
+                    @endif
                 </nav>
             </ul>
         </div>
@@ -120,7 +129,7 @@
 </div>
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-        <b>Version</b> 3.2.0
+        <b>Version</b> 1.0.0
     </div>
     <strong>Copyright &copy; 2022</strong> All rights reserved.
 </footer>

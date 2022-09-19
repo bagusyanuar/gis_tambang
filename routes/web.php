@@ -20,7 +20,7 @@ Route::get('/quarry/map', [\App\Http\Controllers\DashboardController::class, 'ge
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
 
-    Route::group(['prefix' => 'jenis'], function () {
+    Route::group(['prefix' => 'jenis', 'middleware' => 'admin'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index']);
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CategoryController::class, 'add']);
         Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\CategoryController::class, 'patch']);
@@ -64,4 +64,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
         Route::post('/{id}/media', [\App\Http\Controllers\Admin\QuarryController::class, 'add_media']);
         Route::post('/{image_id}/media/destroy', [\App\Http\Controllers\Admin\QuarryController::class, 'remove_media']);
     });
+});
+
+Route::group(['prefix' => 'member', 'middleware' => 'auth:web'], function (){
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'dashboard_member']);
 });

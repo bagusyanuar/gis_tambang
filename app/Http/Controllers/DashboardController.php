@@ -27,6 +27,16 @@ class DashboardController extends CustomController
         return view('admin.dashboard')->with(['quarries' => $c_quarries, 'cities' => $cities, 'categories' => $categories, 'companies' => count($companies)]);
     }
 
+    public function dashboard_member()
+    {
+        $cities = City::all();
+        $categories = Category::all();
+        return view('member.dashboard')->with([
+            'cities' => $cities,
+            'categories' => $categories
+        ]);
+    }
+
     public function geo_json_data()
     {
         try {
@@ -36,11 +46,11 @@ class DashboardController extends CustomController
 //                $categories, $cities
 //            ]);
             $query = Quarry::with(['company', 'category', 'city']);
-            if($categories !== null) {
+            if ($categories !== null) {
                 $query->whereIn('category_id', $categories);
             }
 
-            if($cities !== null) {
+            if ($cities !== null) {
                 $query->whereIn('city_id', $cities);
             }
             $quarries = $query->get();
