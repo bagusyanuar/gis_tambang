@@ -68,4 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
 
 Route::group(['prefix' => 'member', 'middleware' => 'auth:web'], function (){
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'dashboard_member']);
+
+    Route::group(['prefix' => 'quarry'], function () {
+        Route::get('/{id}/detail', [\App\Http\Controllers\Member\QuarryController::class, 'show']);
+    });
 });

@@ -32,7 +32,7 @@ function initSingleMap(element, coordinates = []) {
     }
 }
 
-function getGeoJSONQuarry(cities = [], categories = [], init = true) {
+function getGeoJSONQuarry(cities = [], categories = [], init = true, isAdmin = false) {
     $.ajax({
         url: '/quarry/map',
         type: 'GET',
@@ -43,7 +43,7 @@ function getGeoJSONQuarry(cities = [], categories = [], init = true) {
         success: function (response) {
             let payload = response['payload'];
             removeAllMarkers();
-            createMarker(payload);
+            createMarker(payload, isAdmin);
             if (!init) {
                 let arrayBound = [];
                 let featuresData = response['payload']['features'];
@@ -61,10 +61,10 @@ function getGeoJSONQuarry(cities = [], categories = [], init = true) {
     });
 }
 
-function createMarker(data) {
+function createMarker(data, isAdmin = false) {
     geo_json = L.geoJSON(data, {}).bindPopup(function (layer) {
         console.log(layer.feature.properties.name);
-        return popUpDetail(layer.feature.properties);
+        return popUpDetail(layer.feature.properties, isAdmin);
     }).addTo(map_container);
 }
 
@@ -93,10 +93,12 @@ function removeSingleMapLayer() {
         });
     }
 }
-function popUpDetail(d) {
+
+function popUpDetail(d, isAdmin = false) {
+    let redirect = isAdmin ? '/admin/quarry/' + d.id + '/detail' : '/member/quarry/' + d.id + '/detail';
     return ('<div>' +
         '<p class="mb-1 font-weight-bold">' + d.name + '</p>' +
         '<p  class="mt-0 mb-0 font-weight-bold">' + d.company.name + '<span style="color: #777777; font-weight: normal"> (' + d.category.name + ')</span></p>' +
-        '<a href="/admin/quarry/' + d.id + '/detail" style="font-size: 12px;">Detail</a>' +
+        '<a href="' + redirect + '" style="font-size: 12px;">Detail</a>' +
         '</div>');
 }

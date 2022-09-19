@@ -101,6 +101,7 @@
     <script type="text/javascript">
         let cities = [];
         let categories = [];
+        var isAdmin = '{{ in_array('admin', auth()->user()->roles) ? true : false }}';
         $(document).on('click', '.dropdown-menu', function (e) {
             e.stopPropagation();
         });
