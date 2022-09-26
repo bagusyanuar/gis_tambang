@@ -76,6 +76,13 @@
                     </li>
                     @if($isAdmin)
                         <li class="nav-item">
+                            <a href="/admin/admin"
+                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/admin') ? 'active' : ''}}">
+                                <i class="fa fa-user nav-icon" aria-hidden="true"></i>
+                                <p>Admin</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/admin/jenis"
                                class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/jenis') ? 'active' : ''}}">
                                 <i class="fa fa-tags nav-icon" aria-hidden="true"></i>

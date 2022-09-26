@@ -20,6 +20,14 @@ Route::get('/quarry/map', [\App\Http\Controllers\DashboardController::class, 'ge
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
 
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index']);
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\AdminController::class, 'add']);
+        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\AdminController::class, 'patch']);
+        Route::match(['post', 'get'], '/{id}/password', [\App\Http\Controllers\Admin\AdminController::class, 'change_password']);
+        Route::post( '/{id}/delete', [\App\Http\Controllers\Admin\AdminController::class, 'destroy']);
+    });
+
     Route::group(['prefix' => 'jenis', 'middleware' => 'admin'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index']);
         Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\Admin\CategoryController::class, 'add']);
