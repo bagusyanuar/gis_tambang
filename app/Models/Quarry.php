@@ -19,6 +19,8 @@ class Quarry extends Model
         'address',
         'latitude',
         'longitude',
+        'results',
+        'file',
         'url'
     ];
 

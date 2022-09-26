@@ -45,7 +45,17 @@ class QuarryController extends CustomController
                     'address' => $this->postField('address'),
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
+                    'results' => $this->postField('results'),
                 ];
+
+                if($this->request->hasFile('file')) {
+                    $file = $this->request->file('file');
+                    $name = $this->uuidGenerator() . '.' . $file->getClientOriginalExtension();
+                    $file_name = '/assets/results/quarries/' . $name;
+//                    Storage::disk('results')->put($name, File::get($file));
+                    $request['file'] = $file_name;
+                }
+                dd($this->request->all());
                 $quarry = Quarry::create($request);
                 if ($this->request->hasFile('images')) {
                     foreach ($this->request->file('images') as $file) {
@@ -71,11 +81,11 @@ class QuarryController extends CustomController
         }
         $cities = City::all();
         $categories = Category::all();
-        $companies = Company::all();
+//        $companies = Company::all();
         return view('admin.quarry.add')->with([
             'cities' => $cities,
             'categories' => $categories,
-            'companies' => $companies,
+//            'companies' => $companies,
         ]);
     }
 

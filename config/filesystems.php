@@ -71,6 +71,12 @@ return [
             'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
+        'results' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/results/quarries',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

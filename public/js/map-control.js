@@ -102,3 +102,18 @@ function popUpDetail(d, isAdmin = false) {
         '<a href="' + redirect + '" style="font-size: 12px;">Detail</a>' +
         '</div>');
 }
+
+var panMarker;
+function mapOnClick(callback) {
+    map_container.on('click', function (e) {
+        // console.log(e.latlng);
+        let coordinate = e.latlng;
+        if (panMarker !== undefined) {
+            map_container.removeLayer(panMarker);
+        }
+        panMarker = L.marker([coordinate.lat,coordinate.lng],{
+        }).addTo(map_container);
+        callback(coordinate.lat, coordinate.lng)
+        // var popup = L.popup().setLatLng(coordinate).setContent('<div></div>').openOn(map_container)
+    })
+}
