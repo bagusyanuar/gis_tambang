@@ -48,14 +48,14 @@ class QuarryController extends CustomController
                     'results' => $this->postField('results'),
                 ];
 
-                if($this->request->hasFile('file')) {
+                if ($this->request->hasFile('file')) {
                     $file = $this->request->file('file');
                     $name = $this->uuidGenerator() . '.' . $file->getClientOriginalExtension();
                     $file_name = '/assets/results/quarries/' . $name;
-//                    Storage::disk('results')->put($name, File::get($file));
+                    Storage::disk('results')->put($name, File::get($file));
                     $request['file'] = $file_name;
                 }
-                dd($this->request->all());
+//                dd($this->request->all());
                 $quarry = Quarry::create($request);
                 if ($this->request->hasFile('images')) {
                     foreach ($this->request->file('images') as $file) {
@@ -102,8 +102,8 @@ class QuarryController extends CustomController
                     'large' => $this->postField('large'),
                     'permission' => $this->postField('permission'),
                     'address' => $this->postField('address'),
-                    'latitude' => $this->postField('latitude'),
-                    'longitude' => $this->postField('longitude'),
+//                    'latitude' => $this->postField('latitude'),
+//                    'longitude' => $this->postField('longitude'),
                 ];
                 $data->update($request);
                 return redirect()->back()->with('success', 'Berhasil Merubah Data...');
@@ -113,13 +113,53 @@ class QuarryController extends CustomController
         }
         $cities = City::all();
         $categories = Category::all();
-        $companies = Company::all();
+//        $companies = Company::all();
         return view('admin.quarry.edit')->with([
             'data' => $data,
             'cities' => $cities,
             'categories' => $categories,
-            'companies' => $companies,
+//            'companies' => $companies,
         ]);
+    }
+
+    public function patch_coordinate($id)
+    {
+        try {
+            $data = Quarry::with(['company', 'category', 'city', 'images'])->where('id', '=', $id)->first();
+            if (!$data) {
+                return $this->jsonResponse('Quarry Tidak Di Temukan', 500);
+            }
+            $data->update([
+                'latitude' => $this->postField('latitude'),
+                'longitude' => $this->postField('longitude'),
+            ]);
+            return $this->jsonResponse('success', 200);
+        } catch (\Exception $e) {
+            return $this->jsonResponse('Terjadi Kesalahan Server', 500);
+        }
+    }
+
+    public function patch_results($id)
+    {
+        try {
+            $data = Quarry::with(['company', 'category', 'city', 'images'])->findOrFail($id);
+
+            $request = [
+                'results' => $this->postField('results')
+            ];
+
+            if ($this->request->hasFile('file')) {
+                $file = $this->request->file('file');
+                $name = $this->uuidGenerator() . '.' . $file->getClientOriginalExtension();
+                $file_name = '/assets/results/quarries/' . $name;
+                Storage::disk('results')->put($name, File::get($file));
+                $request['file'] = $file_name;
+            }
+            $data->update($request);
+            return redirect()->back()->with('success', 'Berhasil Merubah Data Hasil Mutu...');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
+        }
     }
 
     public function add_media($id)

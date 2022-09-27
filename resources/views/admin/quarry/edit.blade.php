@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"
           integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -35,7 +47,7 @@
         <section>
             <div class="card card-warning card-outline">
                 <div class="card-header border-bottom-0">
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist" id="data-tab">
                         <li class="nav-item">
                             <a href="#tab-info" class="nav-link active" id="info-tab" data-toggle="pill" role="tab"
                                aria-controls="tab-info" aria-selected="false">
@@ -43,9 +55,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#tab-results" class="nav-link" id="results-tab" data-toggle="pill" role="tab"
+                               aria-controls="tab-results" aria-selected="false">
+                                Hasil Mutu
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#tab-gallery" class="nav-link" id="gallery-tab" data-toggle="pill" role="tab"
                                aria-controls="tab-gallery" aria-selected="false">
                                 Galerry
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tab-location" class="nav-link" id="location-tab" data-toggle="pill" role="tab"
+                               aria-controls="tab-location" aria-selected="false">
+                                Lokasi
                             </a>
                         </li>
                     </ul>
@@ -70,16 +94,16 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group w-100 mb-2">
-                                    <label for="company" class="f14">Perusahaan</label>
-                                    <select class="select2 f14" name="company" id="company" style="width: 100%;">
-                                        @foreach($companies as $company)
-                                            <option value="{{ $company->id }}"
-                                                    {{ $data->company_id == $company->id ? 'selected' : '' }}
-                                                    class="f14">{{ ucwords(strtolower($company->name)) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                {{--                                <div class="form-group w-100 mb-2">--}}
+                                {{--                                    <label for="company" class="f14">Perusahaan</label>--}}
+                                {{--                                    <select class="select2 f14" name="company" id="company" style="width: 100%;">--}}
+                                {{--                                        @foreach($companies as $company)--}}
+                                {{--                                            <option value="{{ $company->id }}"--}}
+                                {{--                                                    {{ $data->company_id == $company->id ? 'selected' : '' }}--}}
+                                {{--                                                    class="f14">{{ ucwords(strtolower($company->name)) }}</option>--}}
+                                {{--                                        @endforeach--}}
+                                {{--                                    </select>--}}
+                                {{--                                </div>--}}
                                 <div class="form-group w-100 mb-2">
                                     <label for="category" class="f14">Kategori</label>
                                     <select class="select2 f14" name="category" id="category" style="width: 100%;">
@@ -105,25 +129,57 @@
                                     <textarea rows="3" class="form-control f14" id="address" placeholder="Alamat"
                                               name="address">{{ $data->address }}</textarea>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="w-100 mb-2">
-                                            <label for="latitude" class="form-label f14">Latitude</label>
-                                            <input type="number" step="any" class="form-control f14" id="latitude"
-                                                   placeholder="0" value="{{ $data->latitude }}"
-                                                   name="latitude">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="w-100 mb-2">
-                                            <label for="longitude" class="form-label f14">Longitude</label>
-                                            <input type="number" step="any" class="form-control f14" id="longitude"
-                                                   placeholder="0" value="{{ $data->longitude }}"
-                                                   name="longitude">
-                                        </div>
+                                {{--                                <div class="row mb-2">--}}
+                                {{--                                    <div class="col-lg-6 col-md-6 col-sm-6">--}}
+                                {{--                                        <div class="w-100 mb-2">--}}
+                                {{--                                            <label for="latitude" class="form-label f14">Latitude</label>--}}
+                                {{--                                            <input type="number" step="any" class="form-control f14" id="latitude"--}}
+                                {{--                                                   placeholder="0" value="{{ $data->latitude }}"--}}
+                                {{--                                                   name="latitude">--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="col-lg-6 col-md-6 col-sm-6">--}}
+                                {{--                                        <div class="w-100 mb-2">--}}
+                                {{--                                            <label for="longitude" class="form-label f14">Longitude</label>--}}
+                                {{--                                            <input type="number" step="any" class="form-control f14" id="longitude"--}}
+                                {{--                                                   placeholder="0" value="{{ $data->longitude }}"--}}
+                                {{--                                                   name="longitude">--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+
+                                <hr>
+                                <div class="w-100 text-right">
+                                    <button type="submit" class="main-button f14" id="btn-save">
+                                        <i class="fa fa-check mr-2"></i>
+                                        <span>Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-results" class="tab-pane fade" role="tabpanel" aria-labelledby="results-tab">
+                            <form method="post" action="/admin/quarry/{{ $data->id }}/results" enctype="multipart/form-data">
+                                @csrf
+                                <div class="w-100 mb-3">
+                                    <label for="results" class="form-label f14">Hasil Mutu</label>
+                                    <textarea rows="3" class="form-control f14" id="results" placeholder="Hasil Mutu"
+                                              name="results">{{ $data->results }}</textarea>
+                                </div>
+                                <div class="w-100 mb-2">
+                                    <label for="file" class="form-label f14 mb-0">File Hasil Mutu <span
+                                            style="font-weight: normal">
+                                        @if($data->file != null)
+                                                <a href="{{ $data->file }}" target="_blank">download</a>
+                                            @else
+                                                <span>(Belum Ada File Hasil Mutu)</span>
+                                            @endif
+                                    </span>
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file" name="file">
+                                        <label class="custom-file-label f14" for="file">Pilih File Hasil Mutu...</label>
                                     </div>
                                 </div>
-
                                 <hr>
                                 <div class="w-100 text-right">
                                     <button type="submit" class="main-button f14" id="btn-save">
@@ -144,7 +200,8 @@
                                                      style="object-fit: cover; border-radius: 5px; height: 250px; width: 100%">
                                             </a>
                                             <div class="w-100 text-center">
-                                                <a href="#" class="btn-remove-image" data-id="{{ $image->id }}">Hapus File</a>
+                                                <a href="#" class="btn-remove-image" data-id="{{ $image->id }}">Hapus
+                                                    File</a>
                                             </div>
                                         </div>
                                     </div>
@@ -171,6 +228,16 @@
                                 </a>
                             </div>
                         </div>
+                        <div id="tab-location" class="tab-pane fade" role="tabpanel" aria-labelledby="location-tab">
+                            <div id="map" class="mb-2"></div>
+                            <hr>
+                            <div class="w-100 text-right">
+                                <a href="#" class="main-button f14" id="btn-change-coordinate">
+                                    <i class="fa fa-check mr-2"></i>
+                                    <span>Simpan</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -185,9 +252,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"
             integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('/js/map-control.js') }}"></script>
     <script type="text/javascript">
         var id = '{{ $data->id }}';
         Dropzone.autoDiscover = false;
+        var _lat = parseFloat('{{ $data->latitude }}'), _lng = parseFloat('{{ $data->longitude }}');
 
         async function removeMedia(id) {
             try {
@@ -195,6 +264,22 @@
                 await $.post('/admin/quarry/' + id + '/media/destroy');
                 blockLoading(false);
                 SuccessAlert('Berhasil', 'Berhasil Menghapus Gambar...');
+                window.location.reload();
+            } catch (e) {
+                blockLoading(false);
+                ErrorAlert('Gagal', 'Terjadi Kesalahan...');
+            }
+        }
+
+        async function patchLocation() {
+            try {
+                blockLoading(true);
+                await $.post('/admin/quarry/' + id + '/location', {
+                    latitude: _lat,
+                    longitude: _lng
+                });
+                blockLoading(false);
+                SuccessAlert('Berhasil', 'Berhasil Mengganti Koordinat...');
                 window.location.reload();
             } catch (e) {
                 blockLoading(false);
@@ -248,6 +333,28 @@
                 AlertConfirm('Apakah Anda Yakin?', 'Apa anda yakin ingin melanjutkan proses', function () {
                     removeMedia(id);
                 });
+            });
+
+            $('#data-tab').on('shown.bs.tab', function (e) {
+                let tabId = e.target.id;
+                if (tabId === 'location-tab') {
+                    initMap('map');
+                    changeOnClick(_lat, _lng, function (lat, lng) {
+                        _lat = lat;
+                        _lng = lng;
+                    })
+                }
+            });
+
+            $('#btn-change-coordinate').on('click', function (e) {
+                e.preventDefault();
+                AlertConfirm('Apakah Anda Yakin?', 'Apa anda yakin ingin melanjutkan proses', function () {
+                    patchLocation();
+                });
+            });
+            $('.custom-file-input').on('change', function () {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
             });
         })
     </script>

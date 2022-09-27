@@ -98,7 +98,7 @@ function popUpDetail(d, isAdmin = false) {
     let redirect = isAdmin ? '/admin/quarry/' + d.id + '/detail' : '/member/quarry/' + d.id + '/detail';
     return ('<div>' +
         '<p class="mb-1 font-weight-bold">' + d.name + '</p>' +
-        '<p  class="mt-0 mb-0 font-weight-bold">' + d.company.name + '<span style="color: #777777; font-weight: normal"> (' + d.category.name + ')</span></p>' +
+        '<p  class="mt-0 mb-0 font-weight-bold"><span style="color: #777777; font-weight: normal"> (' + d.category.name + ')</span></p>' +
         '<a href="' + redirect + '" style="font-size: 12px;">Detail</a>' +
         '</div>');
 }
@@ -115,5 +115,29 @@ function mapOnClick(callback) {
         }).addTo(map_container);
         callback(coordinate.lat, coordinate.lng)
         // var popup = L.popup().setLatLng(coordinate).setContent('<div></div>').openOn(map_container)
+    })
+}
+
+function changeOnClick(lat = 0, lng = 0, callback) {
+    let coordinate = {lat: lat, lng: lng};
+    panMarker = L.marker([coordinate.lat,coordinate.lng],{
+    }).addTo(map_container);
+    map_container.panTo(new L.LatLng(coordinate.lat, coordinate.lng));
+    map_container.on('click', function (e) {
+        // console.log(e.latlng);
+        coordinate = e.latlng;
+        // if(lat !== 0 || lng !== 0) {
+        //     coordinate = {
+        //         lat: lat,
+        //         lng: lng
+        //     }
+        // }
+        console.log(coordinate);
+        if (panMarker !== undefined) {
+            map_container.removeLayer(panMarker);
+        }
+        panMarker = L.marker([coordinate.lat,coordinate.lng],{
+        }).addTo(map_container);
+        callback(coordinate.lat, coordinate.lng)
     })
 }

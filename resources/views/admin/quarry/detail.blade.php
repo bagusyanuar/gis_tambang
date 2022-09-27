@@ -51,6 +51,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#tab-results" class="nav-link" id="results-tab" data-toggle="pill" role="tab"
+                               aria-controls="tab-results" aria-selected="false">
+                                Hasil Mutu
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#tab-gallery" class="nav-link" id="gallery-tab" data-toggle="pill" role="tab"
                                aria-controls="tab-gallery" aria-selected="false">
                                 Galerry
@@ -87,11 +93,11 @@
                                 <input type="text" class="form-control f14" id="city" placeholder="Kota / Kabupaten"
                                        name="city" value="{{ $data->city->name }}" readonly>
                             </div>
-                            <div class="w-100 mb-2">
-                                <label for="company" class="form-label f14">Nama Perusahaan</label>
-                                <input type="text" class="form-control f14" id="company" placeholder="Nama Perusahaan"
-                                       name="company" value="{{ $data->company->name }}" readonly>
-                            </div>
+                            {{--                            <div class="w-100 mb-2">--}}
+                            {{--                                <label for="company" class="form-label f14">Nama Perusahaan</label>--}}
+                            {{--                                <input type="text" class="form-control f14" id="company" placeholder="Nama Perusahaan"--}}
+                            {{--                                       name="company" value="{{ $data->company->name }}" readonly>--}}
+                            {{--                            </div>--}}
                             <div class="w-100 mb-2">
                                 <label for="large" class="form-label f14">Luas (meter persegi)</label>
                                 <input type="number" class="form-control f14" id="large" placeholder="0"
@@ -107,24 +113,40 @@
                                 <textarea rows="3" class="form-control f14" id="address" placeholder="Alamat"
                                           name="address" readonly>{{ $data->address }}</textarea>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="w-100 mb-2">
-                                        <label for="latitude" class="form-label f14">Latitude</label>
-                                        <input type="number" step="any" class="form-control f14" id="latitude"
-                                               placeholder="0"
-                                               name="latitude" value="{{ $data->latitude }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="w-100 mb-2">
-                                        <label for="longitude" class="form-label f14">Longitude</label>
-                                        <input type="number" step="any" class="form-control f14" id="longitude"
-                                               placeholder="0" value="{{ $data->longitude }}" readonly
-                                               name="longitude">
-                                    </div>
-                                </div>
+                            {{--                            <div class="row mb-2">--}}
+                            {{--                                <div class="col-lg-6 col-md-6 col-sm-6">--}}
+                            {{--                                    <div class="w-100 mb-2">--}}
+                            {{--                                        <label for="latitude" class="form-label f14">Latitude</label>--}}
+                            {{--                                        <input type="number" step="any" class="form-control f14" id="latitude"--}}
+                            {{--                                               placeholder="0"--}}
+                            {{--                                               name="latitude" value="{{ $data->latitude }}" readonly>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                                <div class="col-lg-6 col-md-6 col-sm-6">--}}
+                            {{--                                    <div class="w-100 mb-2">--}}
+                            {{--                                        <label for="longitude" class="form-label f14">Longitude</label>--}}
+                            {{--                                        <input type="number" step="any" class="form-control f14" id="longitude"--}}
+                            {{--                                               placeholder="0" value="{{ $data->longitude }}" readonly--}}
+                            {{--                                               name="longitude">--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
+                        </div>
+                        <div id="tab-results" class="tab-pane fade" role="tabpanel" aria-labelledby="results-tab">
+                            <div class="w-100 mb-3">
+                                <label for="results" class="form-label f14">Hasil Mutu</label>
+                                <textarea rows="3" class="form-control f14" id="results" placeholder="Hasil Mutu"
+                                          name="results" readonly>{{ $data->results }}</textarea>
                             </div>
+                            <div class="w-100 mb-2">
+                                <label for="file" class="form-label f14 mb-0">File Hasil Mutu</label>
+                                @if($data->file != null)
+                                <a href="{{ $data->file }}" target="_blank" class="d-block">download</a>
+                                @else
+                                    <p class="font-weight-bold">Belum Ada File Hasil Mutu</p>
+                                @endif
+                            </div>
+
                         </div>
                         <div id="tab-gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="gallery-tab">
                             <div class="row">
@@ -169,7 +191,7 @@
 
             $('#data-tab').on('shown.bs.tab', function (e) {
                 let tabId = e.target.id;
-                if(tabId === 'location-tab') {
+                if (tabId === 'location-tab') {
                     removeSingleMapLayer();
                     initSingleMap('single-map');
                     createSingleMarker(coordinates);

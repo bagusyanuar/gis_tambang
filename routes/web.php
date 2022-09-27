@@ -70,6 +70,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:web'], function () {
         Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\Admin\QuarryController::class, 'patch']);
         Route::get('/{id}/detail', [\App\Http\Controllers\Admin\QuarryController::class, 'show']);
         Route::post('/{id}/media', [\App\Http\Controllers\Admin\QuarryController::class, 'add_media']);
+        Route::post('/{id}/location', [\App\Http\Controllers\Admin\QuarryController::class, 'patch_coordinate']);
+        Route::post('/{id}/results', [\App\Http\Controllers\Admin\QuarryController::class, 'patch_results']);
         Route::post('/{image_id}/media/destroy', [\App\Http\Controllers\Admin\QuarryController::class, 'remove_media']);
     });
 });

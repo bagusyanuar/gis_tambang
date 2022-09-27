@@ -13,7 +13,7 @@
             crossorigin=""></script>
     <style>
         #map {
-            height: 300px;
+            height: 350px;
             width: 100%
         }
         #document-dropzone {
@@ -27,6 +27,7 @@
             justify-content: center;
             align-items: center;
             margin: auto;
+            overflow: scroll;
         }
     </style>
 @endsection
@@ -141,18 +142,15 @@
                                 <label class="custom-file-label f14" for="file">Pilih File Hasil Mutu...</label>
                             </div>
                         </div>
-                        <div class="row mb-4">
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <label for="map">Koordinat</label>
-                                <div id="map"></div>
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <label for="document">Photo</label>
-                                <div class="needsclick dropzone" id="document-dropzone">
-                                </div>
+                        <div class="w-100 mb-2">
+                            <label for="map">Koordinat</label>
+                            <div id="map"></div>
+                        </div>
+                        <div class="w-100 mb-4">
+                            <label for="document">Photo</label>
+                            <div class="needsclick dropzone" id="document-dropzone">
                             </div>
                         </div>
-
                         <hr>
                         <div class="w-100 text-right">
                             <a href="#" class="main-button f14" id="btn-save">

@@ -92,7 +92,7 @@
                 '<div class="col-lg-3 col-md-4 col-sm-6">' +
                 '<p>Perusahaan</p>' +
                 '</div>' +
-                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['company']['name']+ '</div>' +
+                '<div class="col-lg-9 col-md-8 col-sm-6">: '+d['name']+ '</div>' +
                 '</div>' +
                 '<div class="row">' +
                 '<div class="col-lg-3 col-md-4 col-sm-6">' +

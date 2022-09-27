@@ -89,13 +89,13 @@
                                 <p>Jenis Quarry</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/admin/perusahaan"
-                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/perusahaan') ? 'active' : ''}}">
-                                <i class="fa fa-address-book nav-icon" aria-hidden="true"></i>
-                                <p>Perusahaan</p>
-                            </a>
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="/admin/perusahaan"--}}
+{{--                               class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/perusahaan') ? 'active' : ''}}">--}}
+{{--                                <i class="fa fa-address-book nav-icon" aria-hidden="true"></i>--}}
+{{--                                <p>Perusahaan</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                         <li class="nav-item">
                             <a href="/admin/member"
                                class="nav-link {{ str_contains(\Illuminate\Support\Facades\Request::path(), 'admin/member') ? 'active' : ''}}">
