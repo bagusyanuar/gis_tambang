@@ -17,7 +17,7 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Quarry
                 </li>
@@ -29,7 +29,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="mb-0">Data Quarry</p>
-                    <a href="/admin/quarry/tambah" class="main-button f14">
+                    <a href="{{ env('PREFIX_URL') }}/admin/quarry/tambah" class="main-button f14">
                         <i class="fa fa-plus mr-1"></i>
                         <span>Tambah</span>
                     </a>
@@ -84,6 +84,7 @@
     <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
         var table;
+        var prefix_url = '{{ env('PREFIX_URL') }}';
 
         function detailElement(d) {
             return '<div>' +
@@ -141,7 +142,7 @@
         }
 
         $(document).ready(function () {
-            table = DataTableGenerator('#table-data', '/admin/quarry/data', [
+            table = DataTableGenerator('#table-data', prefix_url+'/admin/quarry/data', [
                 {
                     className: 'dt-control',
                     orderable: false,
@@ -169,9 +170,9 @@
                             '                                        <span style="font-size: 12px;">Kelola</span>\n' +
                             '                                    </a>\n' +
                             '                                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">\n' +
-                            '                                        <a href="/admin/quarry/' + data['id'] + '/edit" class="dropdown-item f12">Edit</a>\n' +
+                            '                                        <a href="'+prefix_url+'/admin/quarry/' + data['id'] + '/edit" class="dropdown-item f12">Edit</a>\n' +
                             '                                        <a href="#" data-id="' + data['id'] + '" class="dropdown-item f12 btn-delete">Delete</a>\n' +
-                            '<a href="/admin/quarry/' + data['id'] + '/detail" class="dropdown-item f12">Detail</a>' +
+                            '<a href="'+prefix_url+'/admin/quarry/' + data['id'] + '/detail" class="dropdown-item f12">Detail</a>' +
                             '                                    </div>\n' +
                             '                                </div>';
                     }

@@ -5,6 +5,7 @@ var default_center = {
     lng: 114.4373073
 };
 var geo_json;
+var pref_url = '/balai-jatim/gis_quarry';
 
 
 function initMap(element) {
@@ -95,7 +96,7 @@ function removeSingleMapLayer() {
 }
 
 function popUpDetail(d, isAdmin = false) {
-    let redirect = isAdmin ? '/admin/quarry/' + d.id + '/detail' : '/member/quarry/' + d.id + '/detail';
+    let redirect = isAdmin ? pref_url+'/admin/quarry/' + d.id + '/detail' : pref_url+'/member/quarry/' + d.id + '/detail';
     return ('<div>' +
         '<p class="mb-1 font-weight-bold">' + d.name + '</p>' +
         '<p  class="mt-0 mb-0 font-weight-bold"><span style="color: #777777; font-weight: normal"> (' + d.category.name + ')</span></p>' +

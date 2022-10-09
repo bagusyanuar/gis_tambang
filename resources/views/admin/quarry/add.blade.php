@@ -48,10 +48,10 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="/admin/quarry">Quarry</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin/quarry">Quarry</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah
                 </li>
@@ -182,12 +182,13 @@
         })
     </script>
     <script type="text/javascript">
+        var prefix_url = '{{ env('PREFIX_URL') }}';
         Dropzone.autoDiscover = false;
         var _lat = null, _lng = null;
         $(document).ready(function () {
             var uploadedDocumentMap = {}
             $("#document-dropzone").dropzone({
-                url: '/admin/quarry/tambah',
+                url: prefix_url+'/admin/quarry/tambah',
                 maxFilesize: 2, // MB
                 addRemoveLinks: true,
                 acceptedFiles: ".jpeg,.jpg,.png,.gif",
@@ -218,7 +219,7 @@
                             $.ajax({
                                 type: "POST",
                                 enctype: 'multipart/form-data',
-                                url: "/admin/quarry/tambah",
+                                url: prefix_url+"/admin/quarry/tambah",
                                 data: f_data,
                                 processData: false,
                                 contentType: false,

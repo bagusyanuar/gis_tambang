@@ -19,10 +19,10 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="/admin/kota">Kota / Kabupaten</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin/kota">Kota / Kabupaten</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah
                 </li>

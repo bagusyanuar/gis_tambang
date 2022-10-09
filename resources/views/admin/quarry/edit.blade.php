@@ -35,10 +35,10 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="/admin/quarry">Quarry</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin/quarry">Quarry</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit
                 </li>
@@ -158,7 +158,7 @@
                             </form>
                         </div>
                         <div id="tab-results" class="tab-pane fade" role="tabpanel" aria-labelledby="results-tab">
-                            <form method="post" action="/admin/quarry/{{ $data->id }}/results" enctype="multipart/form-data">
+                            <form method="post" action="{{ env('PREFIX_URL') }}/admin/quarry/{{ $data->id }}/results" enctype="multipart/form-data">
                                 @csrf
                                 <div class="w-100 mb-3">
                                     <label for="results" class="form-label f14">Hasil Mutu</label>
@@ -254,6 +254,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('/js/map-control.js') }}"></script>
     <script type="text/javascript">
+        var prefix_url = '{{ env('PREFIX_URL') }}';
         var id = '{{ $data->id }}';
         Dropzone.autoDiscover = false;
         var _lat = parseFloat('{{ $data->latitude }}'), _lng = parseFloat('{{ $data->longitude }}');
@@ -261,7 +262,7 @@
         async function removeMedia(id) {
             try {
                 blockLoading(true);
-                await $.post('/admin/quarry/' + id + '/media/destroy');
+                await $.post(prefix_url+'/admin/quarry/' + id + '/media/destroy');
                 blockLoading(false);
                 SuccessAlert('Berhasil', 'Berhasil Menghapus Gambar...');
                 window.location.reload();
@@ -274,7 +275,7 @@
         async function patchLocation() {
             try {
                 blockLoading(true);
-                await $.post('/admin/quarry/' + id + '/location', {
+                await $.post(prefix_url+'/admin/quarry/' + id + '/location', {
                     latitude: _lat,
                     longitude: _lng
                 });
@@ -293,7 +294,7 @@
             });
             var uploadedDocumentMap = {};
             $("#document-dropzone").dropzone({
-                url: '/admin/quarry/' + id + '/media',
+                url: prefix_url+'/admin/quarry/' + id + '/media',
                 maxFilesize: 2, // MB
                 addRemoveLinks: true,
                 acceptedFiles: ".jpeg,.jpg,.png,.gif",

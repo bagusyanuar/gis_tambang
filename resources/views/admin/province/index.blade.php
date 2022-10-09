@@ -10,7 +10,7 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Provinsi
                 </li>
@@ -22,7 +22,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="mb-0">Data Provinsi</p>
-                    <a href="/admin/provinsi/tambah" class="main-button f14">
+                    <a href="{{ env('PREFIX_URL') }}/admin/provinsi/tambah" class="main-button f14">
                         <i class="fa fa-plus mr-1"></i>
                         <span>Tambah</span>
                     </a>
@@ -48,7 +48,7 @@
                                         <span style="font-size: 12px;">Kelola</span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-                                        <a href="/admin/provinsi/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
+                                        <a href="{{ env('PREFIX_URL') }}/admin/provinsi/{{$v->id}}/edit" class="dropdown-item f12">Edit</a>
                                         <a href="#" data-id="{{ $v->id }}"
                                            class="dropdown-item f12 btn-delete">Delete</a>
                                     </div>
@@ -67,8 +67,9 @@
 @section('js')
     <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
+        var prefix_url = '{{ env('PREFIX_URL') }}';
         function destroy(id) {
-            AjaxPost('/admin/provinsi/' + id + '/delete', function () {
+            AjaxPost(prefix_url+'/admin/provinsi/' + id + '/delete', function () {
                 window.location.reload();
             })
         }

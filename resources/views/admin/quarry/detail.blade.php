@@ -31,10 +31,10 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/admin">Dashboard</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="/admin/quarry">Quarry</a>
+                    <a href="{{ env('PREFIX_URL') }}/admin/quarry">Quarry</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $data->name }}
                 </li>
@@ -184,6 +184,7 @@
     <script src="{{ asset('/js/helper.js') }}"></script>
     <script src="{{ asset('/js/map-control.js') }}"></script>
     <script type="text/javascript">
+        var prefix_url = '{{ env('PREFIX_URL') }}';
         let lat = '{{ $data->latitude }}';
         let lng = '{{ $data->longitude }}';
         let coordinates = [parseFloat(lat), parseFloat(lng)];
