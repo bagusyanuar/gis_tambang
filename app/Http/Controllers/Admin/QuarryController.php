@@ -228,4 +228,17 @@ class QuarryController extends CustomController
         }
     }
 
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            QuarryImage::where('quarry_id', '=', $id)->delete();
+            Quarry::destroy($id);
+            DB::commit();
+            return $this->jsonResponse('success', 200);
+        }catch (\Exception $e) {
+            DB::rollBack();
+            return $this->jsonResponse('Terjadi Kesalahan Server...', 500);
+        }
+    }
 }

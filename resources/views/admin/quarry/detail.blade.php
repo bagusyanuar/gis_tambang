@@ -141,7 +141,7 @@
                             <div class="w-100 mb-2">
                                 <label for="file" class="form-label f14 mb-0">File Hasil Mutu</label>
                                 @if($data->file != null)
-                                <a href="{{ $data->file }}" target="_blank" class="d-block">download</a>
+                                <a href="{{ env('APP_URL'). $data->file }}" target="_blank" class="d-block">download</a>
                                 @else
                                     <p class="font-weight-bold">Belum Ada File Hasil Mutu</p>
                                 @endif
@@ -154,8 +154,8 @@
                                     <div class="col-lg-3 col-md-4 col-sm-12">
                                         <div style="border: solid 1px gray; border-radius: 10px; padding: 5px 5px;"
                                              class="mb-2">
-                                            <a href="{{ $image->image }}" target="_blank" class="mb-1">
-                                                <img src="{{ $image->image }}" alt="quarry image" class="mb-2"
+                                            <a href="{{ env('APP_URL').$image->image }}" target="_blank" class="mb-1">
+                                                <img src="{{ env('APP_URL').$image->image }}" alt="quarry image" class="mb-2"
                                                      style="object-fit: cover; border-radius: 5px; height: 250px; width: 100%">
                                             </a>
                                         </div>

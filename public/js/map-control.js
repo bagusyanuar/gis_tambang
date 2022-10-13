@@ -35,7 +35,7 @@ function initSingleMap(element, coordinates = []) {
 
 function getGeoJSONQuarry(cities = [], categories = [], init = true, isAdmin = false) {
     $.ajax({
-        url: '/quarry/map',
+        url: pref_url+'/quarry/map',
         type: 'GET',
         data: {
             cities: cities,

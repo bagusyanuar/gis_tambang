@@ -141,6 +141,22 @@
             });
         }
 
+        function destroy(id) {
+            AjaxPost(prefix_url+'/admin/quarry/' + id + '/delete', function () {
+                window.location.reload();
+            })
+        }
+
+        function eventDelete() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                AlertConfirm('Apakah anda yakin menghapus?', 'Data yang dihapus tidak dapat dikembalikan!', function () {
+                    destroy(id);
+                })
+            });
+        }
+
         $(document).ready(function () {
             table = DataTableGenerator('#table-data', prefix_url+'/admin/quarry/data', [
                 {
@@ -183,9 +199,11 @@
                 responsive: true,
                 "fnDrawCallback": function (settings) {
                     setExpandDetail();
+                    eventDelete();
                 }
             });
             setExpandDetail();
+            eventDelete();
         });
     </script>
 @endsection
